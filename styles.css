@@ -1,0 +1,57 @@
+html, body {
+	background-color: rgb(60, 197, 202);
+}
+
+.profile-pic {
+	width: 64px;
+	background-color: rgb(230,230,230);
+	border-radius: 50%;
+}
+
+ul {
+	border: 3px solid rgb(20,157,162);
+	border-radius: 3px;
+}
+
+.list-group-item {
+	vertical-align: center;
+}
+
+.list-group-item h3 {
+	color: rgb(20,157,162);
+	display: inline;
+}
+
+.badge {
+	display: inline-flex;
+	justify-content: space-between;
+	height: 20px;
+}
+
+.viewers-badge {
+	width: 64px;
+}
+
+.viewers-badge p{
+	display: inline;
+}
+
+.status-badge {
+	width: 100px;
+}
+
+.status-badge p{
+	display: inline;
+}
+
+.glyphicon-ok-sign {
+	color: #00ff00;
+}
+
+.glyphicon-remove-sign {
+	color: #ff0000;
+}
+
+.list-group-item span {
+	line-height: 100%;
+}
