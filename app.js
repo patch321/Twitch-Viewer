@@ -1,4 +1,4 @@
-var streams = ["casiodorus", "ESL_SC2", "patch3211", "comster404", "OgamingSC2"];
+var streams = ["casiodorus", "ESL_SC2", "patch3211", "comster404", "OgamingSC2", "witwix", "rorsheck", "riotgamesru"];
 var url = "";
 var game = "",
 name = "",
@@ -19,47 +19,57 @@ streams.forEach(function(streamer){
 		async: false,
 		dataType: "json",
 		success: function(user){
-			streamer = user;
-			url = "https://wind-bow.gomix.me/twitch-api/streams/" + streamer.name;
+			//GET NUMBER OF VIEWERS AND ONLINE STATUS
+			url = "https://wind-bow.gomix.me/twitch-api/streams/" + user.name;
+			
 			$.ajax({
 				type: "GET",
 				url: url,
 				async: false,
 				dataType: "json",
 				success: function(dude){
-					streamer.viewers = dude.stream.viewers;
-					streamer.isOnline = true;
+					user.viewers = dude.stream.viewers;
+					user.isOnline = true;
 				}
 			});
-			if(!streamer.viewers){
-				streamer.viewers = 0;
-				streamer.isOnline = false;
+			if(!user.viewers){
+				//USER IS OFFLINE
+				user.viewers = 0;
+				user.isOnline = false;
 			}
-			displayStreamerInfo(streamer);
+			displayStreamerInfo(user);
 		}
 	});
+
 	function displayStreamerInfo(data){
 		console.log(data.display_name + "!!!");
-		html = html + '<a href="https://www.twitch.tv/' + data.name + '" class="list-group-item"><img class="profile-pic" src="';
 		//DISPLAY USER'S PROFILE PICTURE
 		if(data.logo === undefined){
 			//USER DOES NOT EXIST!
-			html = html + 'https://img.clipartfest.com/5e9c58d9fa1aa44523a113686006795c_red-not-sign-transparent-clip-x-clipart-transparent_300-300.png">';
+			data.isActive = false;
+			html += '<a href="https://www.twitch.tv/' + data.name + '" class="list-group-item disabled"><img class="profile-pic" src="';
+			html += 'https://img.clipartfest.com/5e9c58d9fa1aa44523a113686006795c_red-not-sign-transparent-clip-x-clipart-transparent_300-300.png">';
 		} else if(data.logo === null){
-			html = html + 'https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_70x70.png">';
+			//USER HAD DEFAULT PROFILE PIC
+			html += '<a href="https://www.twitch.tv/' + data.name + '" class="list-group-item"><img class="profile-pic" src="';
+			html += 'https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_70x70.png">';
 		} else {
-			html = html + data.logo + '"">';
+			//USER HAS CUSTOMER PROFILE PIC
+			html += '<a href="https://www.twitch.tv/' + data.name + '" class="list-group-item"><img class="profile-pic" src="';
+			html += data.logo + '"">';
 		}
-		if(data.views == undefined){
-			data.views = 0;
-		}
-		html = html + '<h3>' + data.display_name + '</h3><span class="badge viewers-badge"><span class="glyphicon glyphicon-eye-open text-left">';
-		html = html + '</span>' + data.viewers + '</span><span class="status-badge badge">';
+
+		//DISPLAY NAME, VIEWERS, AND ONLINE STATUS
+		html += '<h3>' + streamer + '</h3><span class="badge viewers-badge"><span class="glyphicon glyphicon-eye-open text-left">';
+		html += '</span>' + data.viewers + '</span><span class="status-badge badge">';
 		if(data.isOnline){
-			html = html + '<span class="glyphicon glyphicon-ok-sign"></span><p class="text-right">ONLINE</p></span></a>';
+			html += '<span class="glyphicon glyphicon-ok-sign"></span><p class="text-right">ONLINE</p></span>';
+			html += "<h5 class='text-center'>" + data.game + "</h5></a>";
 		} else{
-			html = html + '<span class="glyphicon glyphicon-remove-sign"></span><p class="text-right">OFFLINE</p></span></a>';
-			//set "disabled" class
+			html += '<span class="glyphicon glyphicon-remove-sign"></span><p class="text-right">OFFLINE</p></span></a>';
+		}
+		if(!data.isActive){
+			html += "<h5 class='text-center'>ERROR 404</h5></a>";
 		}
 	}
 });
