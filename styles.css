@@ -4,6 +4,7 @@ html, body {
 
 .profile-pic {
 	width: 64px;
+	height: 64px;
 	background-color: rgb(230,230,230);
 	border-radius: 50%;
 }
@@ -13,8 +14,16 @@ ul {
 	border-radius: 3px;
 }
 
+.list-group {
+	padding: 0;
+}
+
 .list-group-item {
 	vertical-align: center;
+}
+
+.list-group-item p {
+	margin: 0;
 }
 
 .list-group-item h3 {
