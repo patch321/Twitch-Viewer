@@ -1,4 +1,4 @@
-var streams = ["casiodorus", "ESL_SC2", "patch3211", "comster404", "OgamingSC2", "witwix", "rorsheck", "riotgamesru"];
+var streams = ["casiodorus", "ESL_SC2", "comster404", "OgamingSC2", "witwix", "rorsheck", "riotgamesru", "FCCOKC"];
 var url = "";
 var game = "",
 name = "",
