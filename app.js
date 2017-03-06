@@ -1,14 +1,14 @@
-var streams = ["casiodorus", "ESL_SC2", "patch3211", "comster404", "OgamingSC2", "witwix", "rorsheck", "riotgamesru", "FCCOKC"];
+var streams = ["casiodorus", "ESL_SC2", "comster404", "OgamingSC2", "witwix", "rorsheck", "riotgamesru", "FCCOKC"];
 var url = "";
 var game = "",
-name = "",
-viewers = "",
-logoURL = "",
-isOnline = false,
-isActive = true,
-html = "";
+    name = "",
+    viewers = "",
+    logoURL = "",
+    isOnline = false,
+    isActive = true,
+    html = "";
 
-streams.forEach(function(streamer){
+streams.forEach(function (streamer) {
 	
 
 	//GET USER INFO
