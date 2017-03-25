@@ -16,7 +16,6 @@ streams.forEach(function(streamer){
 	$.ajax({
 		type: "GET",
 		url: url,
-		async: false,
 		dataType: "json",
 		success: function(user){
 			//GET NUMBER OF VIEWERS AND ONLINE STATUS
@@ -25,7 +24,6 @@ streams.forEach(function(streamer){
 			$.ajax({
 				type: "GET",
 				url: url,
-				async: false,
 				dataType: "json",
 				success: function(dude){
 					user.viewers = dude.stream.viewers;
