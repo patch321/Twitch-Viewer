@@ -1,5 +1,4 @@
 var streams = ["casiodorus", "ESL_SC2", "comster404", "OgamingSC2", "witwix", "rorsheck", "riotgamesru", "FCCOKC"];
-var url = "";
 var game = "",
 displayName = "",
 viewers = "",
@@ -11,26 +10,61 @@ html = "";
 streams.forEach(function (stream) {
   var user = "";
   //GET USER INFO
-  $.getJSON(createURL("streams",stream), function(data){
-    console.log("Success!");
-    if(data.stream === null){
-      //User is Offline
-      user.isOnline = false;
-      user.isActive = true;
-    }else if (data.stream ===undefined){
-      //User does not exist
-      user.isOnline = false;
-      user.isActive = false;
-      user.viewers = 0;
-    }else{
-      //User is Online
-      user.isOnline = true;
-      user.viewers = data.stream.viewers;
+  // $.getJSON(createURL("streams",stream), function(data){
+  //   console.log("Success!");
+  //   if(data.stream === null){
+  //     //User is Offline
+  //     user.isOnline = false;
+  //     user.isActive = true;
+  //   }else if (data.stream ===undefined){
+  //     //User does not exist
+  //     user.isOnline = false;
+  //     user.isActive = false;
+  //     user.viewers = 0;
+  //   }else{
+  //     //User is Online
+  //     user.isOnline = true;
+  //     user.viewers = data.stream.viewers;
+  //     user.game = data.stream.game;
+  //   }
+  //   $.getJSON(createURL("channels", stream), function(data){
+  //     user.logoURL = data.logo != null ? data.logo : "https://img.clipartfest.com/5e9c58d9fa1aa44523a113686006795c_red-not-sign-transparent-clip-x-clipart-transparent_300-300.png";
+  //     user.displayName = data.display_name != null ? data.display_name : "ERROR 404";
+  //   });
+  // });
+  $.ajax({
+    type: "GET",
+    url: createURL("streams", stream),
+    async: true,
+    dataType: "json",
+    success: function (data){
+      console.log("Success!");
+      if(data.stream === null){
+        //User is Offline
+        user.isOnline = false;
+        user.isActive = true;
+      }else if (data.stream ===undefined){
+        //User does not exist
+        user.isOnline = false;
+        user.isActive = false;
+        user.viewers = 0;
+      }else{
+        //User is Online
+        user.isOnline = true;
+        user.viewers = data.stream.viewers;
+        user.game = data.stream.game;
+      }
+      $.ajax({
+        type: "GET",
+        url: createURL("channels", stream),
+        async: true,
+        dataType: "json",
+        success: function (data){
+          user.logoURL = data.logo != null ? data.logo : "https://img.clipartfest.com/5e9c58d9fa1aa44523a113686006795c_red-not-sign-transparent-clip-x-clipart-transparent_300-300.png";
+          user.displayName = data.display_name != null ? data.display_name : "ERROR 404";
+        }
+      })
     }
-    $.getJSON(createURL("channels", stream), function(data){
-      user.logoURL = data.logo != null ? data.logo : "https://img.clipartfest.com/5e9c58d9fa1aa44523a113686006795c_red-not-sign-transparent-clip-x-clipart-transparent_300-300.png";
-      user.displayName = data.display_name != null ? data.display_name : "ERROR 404";
-    });
   });
   displayStreamerInfo(user);
 });
